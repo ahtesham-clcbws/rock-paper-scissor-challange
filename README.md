@@ -16,8 +16,8 @@ This is a solution to the [Rock Paper Scissors challenge on Frontend Mentor](htt
 
 ## Links
 
-- Solution URL: [Github Repo](https://github.com/ahtesham-clcbws/rock-paper-scissors-master)
-- Live Site URL: [GitHub Pages](https://ahtesham-clcbws.github.io/rock-paper-scissors-master/RPC/)
+- Solution URL: [Github Repo](https://github.com/ahtesham-clcbws/rock-paper-scissor-challange)
+- Live Site URL: [GitHub Pages](https://ahtesham-clcbws.github.io/rock-paper-scissor-challange)
 
 
 ## Built with
