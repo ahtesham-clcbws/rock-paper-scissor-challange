@@ -1,0 +1,594 @@
+:root {
+  /* Primary Colors */
+  --scissors-gradient: linear-gradient(to top, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+  --paper-gradient: linear-gradient(to top, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+  --rock-gradient: linear-gradient(to top, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+  
+  --lizard-gradient: linear-gradient(to top, hsl(261, 73%, 60%), hsl(261, 72%, 63%));
+  --spock-gradient: linear-gradient(to top, hsl(189, 59%, 53%), hsl(189, 58%, 57%));
+
+  /* Neutral Colors */
+  --dark-text: hsl(229, 25%, 31%);
+  --score-text: hsl(229, 64%, 46%);
+  --header-outline: hsl(217, 16%, 45%);
+
+  /* Background */
+  --bg-gradient: radial-gradient(circle at top, hsl(214, 47%, 23%), hsl(237, 48%, 15%));
+
+  --white: #ffffff;
+  --font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  src: url(https://fonts.google.com/specimen/Barlow+Semi+Condensed); /* Note: Ideally local, but using fallback or system if not available. User didn't provide fonts folder, usually in assets. Assuming internet or system font available. Will use sans-serif fallback. */
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1366px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Header */
+.header {
+  border: 3px solid var(--header-outline);
+  border-radius: 15px;
+  padding: 18px 24px;
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.logo {
+  height: 100%;
+  max-height: 100px;
+}
+
+.score-board {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 10px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.score-title {
+  color: var(--score-text);
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.score-value {
+  color: var(--dark-text);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Game Area */
+.game-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Step 1: Pentagon View */
+.step-1 {
+  position: relative;
+  width: 330px; /* Slightly wider for pentagon */
+  height: 330px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.pentagon-bg {
+  position: absolute;
+  top: 40px;
+  z-index: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.pentagon-bg img {
+    width: 250px; /* Adjust size */
+}
+
+/* Base Option Button */
+.option-btn {
+  border: none;
+  background: transparent;
+  width: 100px; /* Slightly smaller for 5 items */
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: transform 0.2s;
+}
+
+.option-btn:hover {
+    transform: scale(1.1);
+}
+
+.btn-inner {
+  background: var(--white);
+  width: 76px; /* border approx 12px */
+  height: 76px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0px 5px 0px rgba(0,0,0,0.15);
+}
+
+.btn-inner img {
+  width: 45%;
+}
+
+/* Specific Button Styles & Positions for Pentagon */
+/* Top Center */
+.option-btn.scissors {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--scissors-gradient);
+  box-shadow: 0px 5px 0px hsl(39, 89%, 40%);
+}
+.option-btn.scissors:hover { transform: translateX(-50%) scale(1.1); }
+
+/* Top Right */
+.option-btn.paper {
+  top: 90px;
+  right: -10px;
+  background: var(--paper-gradient);
+  box-shadow: 0px 5px 0px hsl(230, 89%, 55%);
+}
+
+/* Top Left */
+.option-btn.spock {
+  top: 90px;
+  left: -10px;
+  background: var(--spock-gradient);
+  box-shadow: 0px 5px 0px hsl(189, 59%, 40%);
+}
+
+/* Bottom Right */
+.option-btn.rock {
+  bottom: 0;
+  right: 10px;
+  background: var(--rock-gradient);
+  box-shadow: 0px 5px 0px hsl(349, 71%, 40%);
+}
+/* Rock needs to lose the specific transform from prev version */
+.option-btn.rock:hover { transform: scale(1.1); }
+
+
+/* Bottom Left */
+.option-btn.lizard {
+  bottom: 0px;
+  left: 10px;
+  background: var(--lizard-gradient);
+  box-shadow: 0px 5px 0px hsl(261, 73%, 45%);
+}
+
+/* Result View Size Override */
+.selection-slot .option-btn {
+    width: 130px;
+    height: 130px;
+    position: relative;
+    top: auto; left: auto; right: auto; bottom: auto;
+    transform: none !important;
+}
+.selection-slot .btn-inner {
+    width: 100px;
+    height: 100px;
+}
+.selection-slot {
+    width: 130px;
+    height: 130px;
+}
+.placeholder-circle {
+    width: 130px;
+    height: 130px;
+}
+
+/* Color classes for result injection */
+.option-btn.spock { box-shadow: 0px 6px 0px hsl(189, 59%, 40%); }
+.option-btn.lizard { box-shadow: 0px 6px 0px hsl(261, 73%, 45%); }
+.step-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align top */
+  width: 100%;
+  max-width: 900px;
+  margin-top: 30px;
+}
+
+.pick-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+}
+
+.pick-label {
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  z-index: 20;
+}
+
+.selection-slot {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Reusing option-btn styles inside selection-slot, need to remove absolute positioning from the class usage in JS or override here */
+.selection-slot .option-btn {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  transform: none;
+  width: 200px; /* Larger in result view */
+  height: 200px;
+  box-shadow: 0px 8px 0px rgba(0,0,0,0.2); /* Re-apply matching shadow color in JS or robust CSS classes */
+  /* Note: The mockups show specific shadow colors. I'll rely on the base class colors, but scaling them up.*/
+  cursor: default;
+}
+.selection-slot .option-btn:hover {
+    transform: none;
+}
+
+.selection-slot .option-btn.paper { box-shadow: 0px 8px 0px hsl(230, 89%, 55%); }
+.selection-slot .option-btn.scissors { box-shadow: 0px 8px 0px hsl(39, 89%, 40%); }
+.selection-slot .option-btn.rock { box-shadow: 0px 8px 0px hsl(349, 71%, 40%); }
+
+.selection-slot .btn-inner {
+    width: 150px;
+    height: 150px;
+}
+
+.placeholder-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 40px;
+  margin-top: 80px; /* Push down to center with buttons */
+  z-index: 30;
+}
+
+.result-text {
+  font-size: 50px;
+  margin-bottom: 15px;
+  white-space: nowrap;
+}
+
+.play-again-btn {
+  background: var(--white);
+  color: var(--dark-text);
+  border: none;
+  border-radius: 8px;
+  padding: 15px 50px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.play-again-btn:hover {
+    color: var(--rock-gradient); /* Red highlight on hover usually */
+}
+
+/* Winner Effect */
+.winner-shadow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    z-index: -1;
+    box-shadow: 
+        0 0 0 40px rgba(255,255,255,0.05),
+        0 0 0 80px rgba(255,255,255,0.03),
+        0 0 0 120px rgba(255,255,255,0.02);
+}
+
+/* Rules Button */
+.rules-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: transparent;
+  border: 1px solid var(--white);
+  color: var(--white);
+  padding: 10px 35px;
+  border-radius: 8px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+.rules-btn:hover {
+    background: white;
+    color: var(--dark-text);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    background:  white;
+    border-radius: 10px;
+    padding: 30px;
+    width: 400px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.modal-header h2 {
+    color: var(--dark-text);
+    font-size: 30px;
+}
+
+.close-modal-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Utilities */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    .header {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 0;
+    }
+    
+    .logo {
+        max-height: 60px;
+    }
+    
+    .score-board {
+        padding: 8px 20px;
+    }
+    .score-value {
+        font-size: 30px;
+    }
+
+    /* Step 1 Mobile Adjustments */
+    .step-1 {
+        width: 260px;
+        height: 260px;
+    }
+    .pentagon-bg img {
+        width: 200px;
+    }
+    .option-btn {
+        width: 80px;
+        height: 80px;
+    }
+    .btn-inner {
+        width: 60px;
+        height: 60px;
+    }
+    
+    /* Reposition for smaller pentagon */
+    .option-btn.paper { top: 70px; right: -5px; }
+    .option-btn.spock { top: 70px; left: -5px; }
+    
+    
+    /* Step 2 Mobile Layout: Side by Side */
+    .step-2 {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .pick-container {
+        flex-direction: column-reverse; /* Text below icon */
+        width: 130px; /* Fixed width to prevent squashing */
+        margin-bottom: 20px;
+        align-items: center;
+        margin: 0 10px; /* Add gap between columns */
+    }
+    
+    .pick-label {
+        margin-top: 20px;
+        margin-bottom: 0;
+        font-size: 14px;
+        white-space: nowrap;
+        z-index: 20; /* Ensure on top if overlap, but margin should fix */
+    }
+    
+    /* Scale down result icons for mobile */
+    .selection-slot {
+        width: 130px; /* Match container width */
+        height: 130px;
+        margin-bottom: 10px;
+    }
+    
+    .selection-slot .option-btn {
+        width: 130px;
+        height: 130px;
+    }
+    
+    .selection-slot .btn-inner {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .placeholder-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    /* Result Section - Force to new row */
+    .result-container {
+        width: 100%;
+        order: 3; 
+        margin-top: 60px;
+        z-index: 50; /* Ensure button is clickable */
+    }
+    
+    .result-container .result-text {
+        font-size: 50px;
+    }
+    
+    /* Ensure selection slot contents don't overflow */
+    .selection-slot .option-btn {
+         position: static; /* Reset absolute positioning from step 1 */
+         transform: none;
+         margin: 0 auto;
+    }
+    
+    /* Reset hover effects on result screen mobile */
+    .selection-slot .option-btn:hover {
+        transform: none;
+    }
+
+    /* Rules Button Mobile Position */
+    .rules-btn {
+        position: static;
+        margin-top: 40px;
+    }
+    .game-area {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Mobile Modal - Full Screen */
+    .modal {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: none;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+    
+    .modal-content {
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        justify-content: space-around;
+        padding: 50px 0;
+        background: white;
+    }
+    
+    .modal-header {
+        margin-bottom: 0;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .close-modal-btn {
+        display: none; 
+    }
+    
+    .close-modal-mobile {
+        display: block !important;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        opacity: 0.5;
+        margin-bottom: 50px; /* Spacing from bottom */
+    }
+}
